@@ -51,7 +51,7 @@ for _ in range(3):
                                       'Login[password]': login_password,
                                       'Login[verifyCode]': cap_text
                                   })
-        print(f'Login: {login_r.text}')
+        print(f'Login: [{login_r.status_code}]{login_r.text}')
         r = json.loads(bjySession.get("https://m.bjyouth.net/dxx/index").text)
         if 'newCourse' not in r:
             print(r)
