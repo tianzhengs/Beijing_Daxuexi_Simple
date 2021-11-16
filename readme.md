@@ -5,7 +5,7 @@
 
 建议配置运行频率一周2次(默认为3天一次),没有成功会出错,默认配置下Github会向邮箱推送,所以没有推送功能
 
-(组织不是海淀区团委可能需要修改org_id)
+
 
 
 # How to use
@@ -14,9 +14,11 @@
 
 ​		(账号密码为登录青春北京的信息,可以在[这里](https://m.bjyouth.net/site/login)测试登录信息) 
 
-​		USERNAME: 账号  
-
-​		PASSWORD: 密码  
+| Name | Description |
+| -------- | -------- |
+| USERNAME | 账号(必须)     |
+| PASSWORD | 密码(必须) |
+| ORGID | 组织ID(可选，默认为172442，北京海淀区团委) |
 
 ​		[如何添加SECRET](https://docs.github.com/cn/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
 

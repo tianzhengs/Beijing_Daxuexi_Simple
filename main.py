@@ -15,6 +15,18 @@ org_id = '172442'  # "北京市海淀团区委"
 username = os.environ["USERNAME"]
 password = os.environ["PASSWORD"]
 
+
+if not (username and password):
+    raise Exception("请设置Secret: USERNAME和PASSWORD")
+
+# or check string type
+try:
+    org_id_input = os.environ["ORGID"]
+    if org_id_input:
+        org_id=int(org_id_input)
+except:
+    ...
+
 def encrypt(t):
     public_key = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD5uIDebA2qU746e/NVPiQSBA0Q3J8/G23zfrwMz4qoip1vuKaVZykuMtsAkCJFZhEcmuaOVl8nAor7cz/KZe8ZCNInbXp2kUQNjJiOPwEhkGiVvxvU5V5vCK4mzGZhhawF5cI/pw2GJDSKbXK05YHXVtOAmg17zB1iJf+ie28TbwIDAQAB\n-----END PUBLIC KEY-----"
     rsa_key = RSA.importKey(public_key)
