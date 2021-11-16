@@ -24,4 +24,5 @@
 
 # 其他
 在Actions中部署了fork后自动跟随本分支更新，如有安全顾虑或其他原因可在Actions配置中手动更改
-感谢[ouyen/qndxx-beijing](https://github.com/ouyen/qndxx-beijing)的启发,因为按自己风格改了很多东西,所以没有放在Fork中
+
+感谢[ouyen/qndxx-beijing](https://github.com/ouyen/qndxx-beijing)
