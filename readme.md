@@ -10,12 +10,16 @@
 感谢[ouyen/qndxx-beijing](https://github.com/ouyen/qndxx-beijing)的启发,因为按自己风格改了很多东西,所以没有放在Fork中
 
 # 配置 Secret
-填写以下SECRET （名称均为大写）: 
+1. Fork
+2. 填写以下SECRET （名称均为大写）: 
 
-(账号密码为登录青春北京的信息,可以在[这里](https://m.bjyouth.net/site/login)测试登录信息) 
+​		(账号密码为登录青春北京的信息,可以在[这里](https://m.bjyouth.net/site/login)测试登录信息) 
 
-​	USERNAME: 账号  
+​		USERNAME: 账号  
 
-​	PASSWORD: 密码  
+​		PASSWORD: 密码  
 
-[如何添加SECRET](https://docs.github.com/cn/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
+​		[如何添加SECRET](https://docs.github.com/cn/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
+
+3. 在Actions界面启用定时任务(并可以手动运行一次试验)，可以在Run python中看到打印的结果信息
+
