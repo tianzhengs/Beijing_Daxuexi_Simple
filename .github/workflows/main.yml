@@ -25,7 +25,7 @@ jobs:
       id: sync
       uses: aormsby/Fork-Sync-With-Upstream-action@v3.1
       with:
-        target_sync_branch: my-branch
+        target_sync_branch: main
         # REQUIRED 'target_repo_token' exactly like this!
         target_repo_token: ${{ secrets.GITHUB_TOKEN }}
         upstream_sync_branch: main
