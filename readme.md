@@ -7,9 +7,8 @@
 
 (组织不是海淀区团委可能需要修改org_id)
 
-感谢[ouyen/qndxx-beijing](https://github.com/ouyen/qndxx-beijing)的启发,因为按自己风格改了很多东西,所以没有放在Fork中
 
-# 配置 Secret
+# How to use
 1. Fork
 2. 填写以下SECRET （名称均为大写）: 
 
@@ -21,5 +20,8 @@
 
 ​		[如何添加SECRET](https://docs.github.com/cn/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
 
-3. 在Actions界面启用定时任务(并可以手动运行一次试验)，可以在Run python中看到打印的结果信息
+3. 在Actions界面**手动**(默认被禁用)启用定时任务(并可以手动运行一次试验)，可以在Run python中看到打印的结果信息
 
+# 其他
+在Actions中部署了fork后自动跟随本分支更新，如有安全顾虑或其他原因可在Actions配置中手动更改
+感谢[ouyen/qndxx-beijing](https://github.com/ouyen/qndxx-beijing)的启发,因为按自己风格改了很多东西,所以没有放在Fork中
