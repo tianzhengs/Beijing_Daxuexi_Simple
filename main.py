@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import time
 import traceback
 from base64 import b64encode
 
@@ -59,6 +60,7 @@ for _ in range(3):
         title = r['newCourse']['title']
         break
     except:
+        time.sleep(3)
         print(traceback.format_exc())
 
 if not url:
