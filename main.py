@@ -10,11 +10,12 @@ from Crypto.Cipher import PKCS1_v1_5 as Cipher_pksc1_v1_5
 from Crypto.PublicKey import RSA
 from ddddocr import DdddOcr
 
+from cap_denoise import dn
+
 org_id = '172442'  # "北京市海淀团区委"
 
 username = os.environ["USERNAME"]
 password = os.environ["PASSWORD"]
-
 
 if not (username and password):
     raise Exception("请设置Secret: USERNAME和PASSWORD")
@@ -23,9 +24,10 @@ if not (username and password):
 try:
     org_id_input = os.environ["ORGID"]
     if org_id_input:
-        org_id=int(org_id_input)
+        org_id = int(org_id_input)
 except:
     ...
+
 
 def encrypt(t):
     public_key = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD5uIDebA2qU746e/NVPiQSBA0Q3J8/G23zfrwMz4qoip1vuKaVZykuMtsAkCJFZhEcmuaOVl8nAor7cz/KZe8ZCNInbXp2kUQNjJiOPwEhkGiVvxvU5V5vCK4mzGZhhawF5cI/pw2GJDSKbXK05YHXVtOAmg17zB1iJf+ie28TbwIDAQAB\n-----END PUBLIC KEY-----"
@@ -51,7 +53,8 @@ for _ in range(10):
 
         cap = bjySession.get(url=cap_url)
         ocr = DdddOcr()
-        cap_text = ocr.classification(cap.content)
+        cap = dn(cap.content)
+        cap_text = ocr.classification(cap)
         print(f'Captcha OCR: {cap_text}')
         _csrf_mobile = bjySession.cookies.get_dict()['_csrf_mobile']
         # TODO: 有时间看一下这个算法
@@ -64,7 +67,7 @@ for _ in range(10):
                                       'Login[password]': login_password,
                                       'Login[verifyCode]': cap_text
                                   })
-        if login_r.text=='8':
+        if login_r.text == '8':
             print('Login: 验证码错误')
         print(f'Login: [{login_r.status_code}]{login_r.text}')
         r = json.loads(bjySession.get("https://m.bjyouth.net/dxx/index").text)
