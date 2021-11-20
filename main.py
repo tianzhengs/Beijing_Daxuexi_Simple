@@ -43,7 +43,7 @@ bjySession.headers.update({
     "User-Agent": fake_ua, })
 
 url = ''
-for _ in range(3):
+for _ in range(10):
     try:
         r = bjySession.get(url="https://m.bjyouth.net/site/login")
         cap_url = "https://m.bjyouth.net" + re.findall(
@@ -64,6 +64,8 @@ for _ in range(3):
                                       'Login[password]': login_password,
                                       'Login[verifyCode]': cap_text
                                   })
+        if login_r.text=='8':
+            print('Login: 验证码错误')
         print(f'Login: [{login_r.status_code}]{login_r.text}')
         r = json.loads(bjySession.get("https://m.bjyouth.net/dxx/index").text)
         if 'newCourse' not in r:
@@ -82,7 +84,7 @@ if not url:
 r2 = bjySession.get('https://m.bjyouth.net/dxx/my-integral?type=2&page=1&limit=15')
 res = json.loads(r2.text)
 if f"学习课程：《{title}》" in list(map(lambda x: x['text'], res['data'])):
-    print(f'{title} already finished')
+    print(f'{title} 在运行前已完成')
     exit(0)
 
 pattern = re.compile(r'https://h5.cyol.com/special/daxuexi/(\w+)/m.html\?t=1&z=201')
@@ -105,7 +107,7 @@ if r.text:
 r = bjySession.get('https://m.bjyouth.net/dxx/my-integral?type=2&page=1&limit=15')
 res = json.loads(r.text)
 if f"学习课程：《{title}》" in list(map(lambda x: x['text'], res['data'])):
-    print(f'{title} finished')
+    print(f'{title} 成功完成学习')
     exit(0)
 else:
     print(f'Seem finished {title}, but not confirmed as {f"学习课程：《{title}》"}' not in {
