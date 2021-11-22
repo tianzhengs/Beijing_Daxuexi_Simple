@@ -9,7 +9,7 @@
 
 
 # How to use
-1. Fork  (+ ~~Star~~)
+1. Fork  (+ Star)
 2. 填写以下SECRET （名称均为大写）: 
 
 ​		(账号密码为登录青春北京的信息,可以在[这里](https://m.bjyouth.net/site/login)测试登录信息) 

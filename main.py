@@ -12,7 +12,6 @@ from ddddocr import DdddOcr
 
 from cap_denoise import dn
 
-org_id = '172442'  # "北京市海淀团区委"
 
 username = os.environ["USERNAME"]
 password = os.environ["PASSWORD"]
@@ -20,6 +19,8 @@ password = os.environ["PASSWORD"]
 if not (username and password):
     raise Exception("请设置Secret: USERNAME和PASSWORD")
 
+
+org_id = '172442'  # "北京市海淀团区委"
 # or check string type
 try:
     org_id_input = os.environ["ORGID"]
@@ -37,16 +38,17 @@ def encrypt(t):
     return cipher_text.decode()
 
 
-bjySession = requests.session()
-# set session timeout
-bjySession.timeout = 5
-fake_ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36 Edg/80.0.361.111'
-bjySession.headers.update({
-    "User-Agent": fake_ua, })
 
 url = ''
 for _ in range(10):
     try:
+        bjySession = requests.session()
+        # set session timeout
+        bjySession.timeout = 5
+        fake_ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36 Edg/80.0.361.111'
+        bjySession.headers.update({
+            "User-Agent": fake_ua, })
+
         r = bjySession.get(url="https://m.bjyouth.net/site/login")
         cap_url = "https://m.bjyouth.net" + re.findall(
             r'src="/site/captcha.+" alt=', r.text)[0][5:-6]
@@ -57,7 +59,6 @@ for _ in range(10):
         cap_text = ocr.classification(cap)
         print(f'Captcha OCR: {cap_text}')
         _csrf_mobile = bjySession.cookies.get_dict()['_csrf_mobile']
-        # TODO: 有时间看一下这个算法
         login_password = encrypt(password)
         login_username = encrypt(username)
         login_r = bjySession.post('https://m.bjyouth.net/site/login',
