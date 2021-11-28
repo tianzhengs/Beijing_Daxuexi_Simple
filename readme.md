@@ -22,7 +22,7 @@
 
 ​		[如何添加SECRET](https://docs.github.com/cn/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
 
-3. 在Actions界面**手动启用(默认被禁用)** Workflows，**DaXueXi** 自动跟随本分支更新(以希望在有变化时不用再手动fetch upstream)，如有安全顾虑或需要修改等可选择没有自动更新的 **DaXueXi (No update)**
+3. 在Actions界面**手动启用(默认被禁用)** Workflows，**DaXueXi** 自动跟随本分支更新(以希望在有变化时不用再手动fetch upstream)，如有安全顾虑**或需要修改**等可选择没有自动更新的 **DaXueXi (No update)**
 4. (可以手动运行一次试验)，可以在Run python中看到打印的结果信息
 
 # 其他
