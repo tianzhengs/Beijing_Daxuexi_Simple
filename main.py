@@ -22,7 +22,8 @@ except:
 url = ''
 ua = os.getenv('UA',
                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36 Edg/80.0.361.111')
-for _ in range(10):
+try_time = 0
+while try_time < 4:
     try:
         bjySession = requests.session()
         bjySession.timeout = 5  # set session timeout
@@ -42,9 +43,13 @@ for _ in range(10):
                                       'Login[password]': login_password,
                                       'Login[verifyCode]': cap_text
                                   })
-        if login_r.text == '8':
-            raise Exception('Login:识别的验证码错误')
         print(f'Login:[{login_r.status_code}]{login_r.text}')
+        if login_r.text == '8':
+            print('Login:识别的验证码错误')
+            continue
+        if 'fail' in login_r.text:
+            try_time += 9
+            raise Exception('Login:账号密码错误')
         r = json.loads(bjySession.get("https://m.bjyouth.net/dxx/index").text)
         if 'newCourse' not in r:
             print(r)
@@ -54,6 +59,7 @@ for _ in range(10):
         break
     except:
         time.sleep(3)
+        try_time += 1
         print(traceback.format_exc())
 
 if not url:
