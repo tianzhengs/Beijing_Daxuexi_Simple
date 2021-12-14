@@ -26,6 +26,7 @@ ua = os.getenv('UA',
                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36 Edg/80.0.361.111')
 
 accounts = getAccounts()
+print("所有账号：",accounts)
 print(f'账号数量：{len(accounts)}')
 successful = 0
 failed = 0
