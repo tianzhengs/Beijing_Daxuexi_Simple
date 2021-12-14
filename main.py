@@ -7,7 +7,7 @@ def getAccounts():
     result = []
 
     # Classic method
-    result.append((os.environ["USERNAME"], os.environ["PASSWORD"], os.getenv("ORGID", "172442")))
+    #result.append((os.environ["USERNAME"], os.environ["PASSWORD"], os.getenv("ORGID", "172442")))
 
     # New method
     account = os.getenv("ACCOUNT", "")
