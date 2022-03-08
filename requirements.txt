@@ -1,5 +1,5 @@
 requests~=2.27.1
 pycryptodome
-Pillow~=9.0.0
+Pillow~=9.0.1
 onnxruntime~=1.9.0
 numpy~=1.21.2
