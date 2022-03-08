@@ -29,13 +29,14 @@ def study(username, password, ua):
                                           'Login[username]': encrypt(username),
                                           'Login[verifyCode]': capText
                                       })
-            print(f'Login:[{login_r.status_code}]{login_r.text}')
+
             if login_r.text == '8':
                 print('Login:识别的验证码错误')
                 continue
             if 'fail' in login_r.text:
                 tryTime += 9
                 raise Exception('Login:账号密码错误')
+            print('登录成功')
             r = json.loads(bjySession.get("https://m.bjyouth.net/dxx/index").text)
             if 'newCourse' not in r:
                 print(r)
@@ -49,31 +50,29 @@ def study(username, password, ua):
             print(traceback.format_exc())
 
     if not url:
-        print('登陆失败,退出')
+        print('登入失败,退出')
         return 0
 
-    r2 = bjySession.get('https://m.bjyouth.net/dxx/my-integral?type=2&page=1&limit=15')
-    haveLearned = json.loads(r2.text)
-
-    orgPattern=re.compile(r'\(|（\s*(\d+)\s*）|\)')
-    rTemp=orgPattern.search(haveLearned['data'][0]['orgname'])
+    haveLearned = bjySession.get('https://m.bjyouth.net/dxx/my-integral?type=2&page=1&limit=15').json()
+    orgPattern = re.compile(r'\(|（\s*(\d+)\s*）|\)')  # 组织id应该是被括号包的
+    rTemp = orgPattern.search(haveLearned['data'][0]['orgname'])
     if rTemp:
-        orgID=rTemp.group(1)
+        orgID = rTemp.group(1)
     else:
-        orgID='172442'
+        orgID = '172442'
         print(f"无法从{haveLearned['data'][0]['orgname']}中获取orgID")
 
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
         print(f'{title} 在运行前已完成,退出')
         return 1
 
-    pattern = re.compile(r'https://h5.cyol.com/special/daxuexi/(\w+)/m.html\?t=1&z=201')
-    result = pattern.search(url)
-    if not result:
-        print(f'Url pattern not matched: {url}')
-        return 0
-
-    end_img_url = f'https://h5.cyol.com/special/daxuexi/{result.group(1)}/images/end.jpg'
+    # pattern = re.compile(r'https://h5.cyol.com/special/daxuexi/(\w+)/m.html\?t=1&z=201')
+    # result = pattern.search(url)
+    # if not result:
+    #     print(f'Url pattern not matched: {url}')
+    #     return 0
+    #
+    # end_img_url = f'https://h5.cyol.com/special/daxuexi/{result.group(1)}/images/end.jpg'
     study_url = f"https://m.bjyouth.net/dxx/check?id={course_id}&org_id={orgID}"
 
     r = bjySession.get(study_url)
