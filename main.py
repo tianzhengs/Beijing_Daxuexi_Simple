@@ -1,7 +1,7 @@
 import os
 
 from study import study
-
+from utility import md5
 
 def getAccounts():
     result = []

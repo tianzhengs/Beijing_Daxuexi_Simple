@@ -20,6 +20,8 @@ def study(username, password, ua):
             touch = bjySession.get(url="https://m.bjyouth.net/site/login")
             capUrl = "https://m.bjyouth.net" + re.findall(
                 r'src="(/site/captcha.+)" alt=', touch.text)[0]
+            if "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD5uIDebA2qU746e/NVPiQSBA0Q" not in touch.text:
+                print("记录的公钥没有出现")
             capText = cap_recognize(bjySession.get(url=capUrl).content)
             # print(f'验证码识别: {capText}')
             login_r = bjySession.post('https://m.bjyouth.net/site/login',
