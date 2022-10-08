@@ -55,14 +55,23 @@ def study(username, password, ua):
         print('登入失败,退出')
         return 0
 
-    haveLearned = bjySession.get('https://m.bjyouth.net/dxx/my-integral?type=2&page=1&limit=15').json()
+    orgIdTemp = ''
     orgPattern = re.compile(r'\(|（\s*(\d+)\s*）|\)')  # 组织id应该是被括号包的
-    rTemp = orgPattern.search(haveLearned['data'][0]['orgname'])
-    if rTemp:
-        orgID = rTemp.group(1)
-    else:
+    haveLearned = bjySession.get('https://m.bjyouth.net/dxx/my-study?page=1&limit=15&year=2022').json()
+
+    orgID = ""
+    try:
+        orgIdTemp = orgPattern.search(haveLearned['data'][0]['orgname'])
+        orgID = orgIdTemp.group(1)
+    except:
+        print('获取组织id-2')
+        orgIdTemp = orgPattern.search(bjySession.get('https://m.bjyouth.net/dxx/my').json()['data']['org'])
+        if orgIdTemp:
+            orgID = orgIdTemp.group(1)
+
+    if not orgID:
         orgID = '172442'
-        print(f"无法从{haveLearned['data'][0]['orgname']}中获取orgID")
+        print(f"无法获取orgID")
 
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
         print(f'{title} 在运行前已完成,退出')

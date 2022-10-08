@@ -4,6 +4,7 @@ from io import BytesIO
 from Crypto.Cipher import PKCS1_v1_5 as Cipher_pksc1_v1_5
 from Crypto.PublicKey import RSA
 from PIL import Image
+
 from ddddocr import DdddOcr
 
 
@@ -14,11 +15,13 @@ def encrypt(t):
     cipher_text = b64encode(cipher.encrypt(t.encode()))
     return cipher_text.decode()
 
+
 def md5(s):
     import hashlib
     m = hashlib.md5()
     m.update(s.encode())
     return m.hexdigest()
+
 
 def cap_recognize(cap):
     return DdddOcr().classification(denoise(cap))
@@ -53,9 +56,11 @@ def denoise(cap):
     img.save(buf, format='PNG')
     return buf.getvalue()
 
+
 if __name__ == '__main__':
     import requests
     import re
+
     bjySession = requests.session()
     bjySession.timeout = 5  # set session timeout
     touch = bjySession.get(url="https://m.bjyouth.net/site/login")
