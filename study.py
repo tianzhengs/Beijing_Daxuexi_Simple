@@ -86,8 +86,9 @@ def study(username, password, ua):
     #
     # end_img_url = f'https://h5.cyol.com/special/daxuexi/{result.group(1)}/images/end.jpg'
     study_url = f"https://m.bjyouth.net/dxx/check?id={course_id}&org_id={orgID}"
-
-    r = bjySession.get(study_url)
+    data = {"id":course_id,"org_id":orgID}
+ 
+    r = bjySession.post(study_url, data=json.dumps(data))
     if r.text:
         print(f'Unexpected response: {r.text}')
         return 0
