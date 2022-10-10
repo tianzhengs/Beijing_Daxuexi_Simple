@@ -29,7 +29,7 @@ jobs:
         # REQUIRED 'target_repo_token' exactly like this!
         target_repo_token: ${{ secrets.GITHUB_TOKEN }}
         upstream_sync_branch: main
-        upstream_sync_repo: startkkkkkk/Beijing_Daxuexi_Simple
+        upstream_sync_repo: sentryjun/Beijing_Daxuexi_Simple
       
     # Step 3: Display a sample message based on the sync output var 'has_new_commits'
     - name: New commits found
