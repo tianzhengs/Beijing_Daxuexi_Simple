@@ -57,7 +57,8 @@ def study(username, password, ua):
 
     orgIdTemp = ''
     orgPattern = re.compile(r'\(|（\s*(\d+)\s*）|\)')  # 组织id应该是被括号包的
-    haveLearned = bjySession.get('https://m.bjyouth.net/dxx/my-study?page=1&limit=15&year=2022').json()
+    learnedInfo = 'https://m.bjyouth.net/dxx/my-study?page=1&limit=15&year=' + time.strftime("%Y", time.localtime())
+    haveLearned = bjySession.get(learnedInfo).json()
 
     orgID = ""
     try:
@@ -91,8 +92,7 @@ def study(username, password, ua):
         print(f'Unexpected response: {r.text}')
         return 0
 
-    r = bjySession.get('https://m.bjyouth.net/dxx/my-integral?type=2&page=1&limit=15')
-    haveLearned = json.loads(r.text)
+    haveLearned = bjySession.get(learnedInfo).json()
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
         print(f'{title} 成功完成学习')
         return 1
