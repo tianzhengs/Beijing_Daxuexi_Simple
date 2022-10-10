@@ -41,7 +41,8 @@ def study(username, password, ua):
             print('登录成功')
             r = json.loads(bjySession.get("https://m.bjyouth.net/dxx/index").text)
             if 'newCourse' not in r:
-                print(r)
+                print('目前没有最新团课, 退出学习')
+                return True
             url = r['newCourse']['url']
             title = r['newCourse']['title']
             course_id = r['newCourse']['id']
@@ -90,7 +91,7 @@ def study(username, password, ua):
     r = bjySession.get(study_url)
     if r.text:
         print(f'Unexpected response: {r.text}')
-        return 0
+        #return 0
 
     haveLearned = bjySession.get(learnedInfo).json()
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
