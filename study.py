@@ -54,7 +54,7 @@ def study(username, password, ua):
 
     if not url:
         print('登入失败,退出')
-        return 0
+        return False
 
     orgIdTemp = ''
     orgPattern = re.compile(r'\(|（\s*(\d+)\s*）|\)')  # 组织id应该是被括号包的
@@ -77,7 +77,7 @@ def study(username, password, ua):
 
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
         print(f'{title} 在运行前已完成,退出')
-        return 1
+        return True
 
     # pattern = re.compile(r'https://h5.cyol.com/special/daxuexi/(\w+)/m.html\?t=1&z=201')
     # result = pattern.search(url)
@@ -96,7 +96,7 @@ def study(username, password, ua):
     haveLearned = bjySession.get(learnedInfo).json()
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
         print(f'{title} 成功完成学习')
-        return 1
+        return True
     else:
         print(f'完成{title}, 但未在检查中确认')
-        return 0
+        return False
