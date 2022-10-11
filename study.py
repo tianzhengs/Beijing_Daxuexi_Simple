@@ -76,7 +76,7 @@ def study(username, password, ua):
         print(f"无法获取orgID")
 
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
-        print(f'{title} 在运行前已完成,退出')
+        print(f'《{title}》 在运行前已完成,退出')
         return True
 
     # pattern = re.compile(r'https://h5.cyol.com/special/daxuexi/(\w+)/m.html\?t=1&z=201')
@@ -90,13 +90,13 @@ def study(username, password, ua):
 
     r = bjySession.get(study_url)
     if r.text:
-        print(f'Unexpected response: {r.text}')
-        #return 0
+        print(f'完成页面出现意料外响应: {r.text}')
+        #return False ## 服务器内部错误时仍然有可能完成学习, 故通过学习记录check判断是否完成学习
 
     haveLearned = bjySession.get(learnedInfo).json()
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
-        print(f'{title} 成功完成学习')
+        print(f'学习记录中出现《{title}》, 成功完成学习')
         return True
     else:
-        print(f'完成{title}, 但未在检查中确认')
+        print(f'学习记录中未出现《{title}》, 可能是网络延迟或响应错误')
         return False
