@@ -44,7 +44,7 @@ def study(username, password, ua):
                 print(r)
             url = r['newCourse']['url']
             title = r['newCourse']['title']
-            course_id = r['newCourse']['id']
+            courseId = r['newCourse']['id']
             break
         except:
             time.sleep(3)
@@ -85,9 +85,8 @@ def study(username, password, ua):
     #     return 0
     #
     # end_img_url = f'https://h5.cyol.com/special/daxuexi/{result.group(1)}/images/end.jpg'
-    study_url = f"https://m.bjyouth.net/dxx/check?id={course_id}&org_id={orgID}"
-
-    r = bjySession.get(study_url)
+    study_url = f"https://m.bjyouth.net/dxx/check"
+    r = bjySession.post(study_url, json={"id": courseId, "org_id": orgID})  # payload
     if r.text:
         print(f'Unexpected response: {r.text}')
         return 0
