@@ -90,7 +90,7 @@ def study(username, password, ua):
     r = bjySession.post(study_url, json={"id": courseId, "org_id": orgID})  # payload
     if r.text:
         print(f'完成页面出现意料外响应: {r.text}')
-        #return False ## 服务器内部错误时仍然有可能完成学习, 故通过学习记录check判断是否完成学习
+        return False
 
     haveLearned = bjySession.get(learnedInfo).json()
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
