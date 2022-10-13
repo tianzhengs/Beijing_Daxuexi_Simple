@@ -40,6 +40,7 @@ def study(username, password, ua):
                 raise Exception('Login:账号密码错误')
             print('登录成功')
             r = json.loads(bjySession.get("https://m.bjyouth.net/dxx/index").text)
+            # "rize" LOL
             if 'newCourse' not in r:
                 print('目前没有最新团课, 退出学习')
                 return True
@@ -87,7 +88,7 @@ def study(username, password, ua):
     #
     # end_img_url = f'https://h5.cyol.com/special/daxuexi/{result.group(1)}/images/end.jpg'
     study_url = f"https://m.bjyouth.net/dxx/check"
-    r = bjySession.post(study_url, json={"id": courseId, "org_id": orgID})  # payload
+    r = bjySession.post(study_url, json={"id": str(courseId), "org_id": int(orgID)})  # payload
     if r.text:
         print(f'完成页面出现意料外响应: {r.text}')
         return False
