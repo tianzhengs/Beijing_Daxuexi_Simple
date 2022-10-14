@@ -47,5 +47,3 @@ print('--Summary--')
 print(f'成功：{successful}，失败：{failed}')
 if failed != 0:
     raise Exception(f'有{failed}个失败！')
-
-raise Exception('貌似自己这显示完成了，但实际上没有？建议自己检查下(尤其是有团支书账号可以看到情况的)，然后可以在issue#31里反馈下')
