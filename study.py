@@ -75,6 +75,8 @@ def study(username, password, ua):
         orgID = '172442'
         print(f"无法获取orgID")
 
+    nOrgID = int(bjySession.get('https://m.bjyouth.net/dxx/is-league').text)
+
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
         print(f'{title} 在运行前已完成,退出')
         return 1
@@ -87,12 +89,17 @@ def study(username, password, ua):
     #
     # end_img_url = f'https://h5.cyol.com/special/daxuexi/{result.group(1)}/images/end.jpg'
     study_url = f"https://m.bjyouth.net/dxx/check"
-    r = bjySession.post(study_url, json={"id": str(courseId), "org_id": int(orgID)})  # payload
+    r = bjySession.post(study_url, json={"id": str(courseId), "org_id": int(nOrgID)})  # payload
+
     if r.text:
         print(f'Unexpected response: {r.text}')
         return 0
 
     haveLearned = bjySession.get(learnedInfo).json()
+
+    if int(orgID) != nOrgID:
+        raise Exception('组织id不匹配，如果看到这个请开个issue说下')
+
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
         print(f'{title} 成功完成学习')
         return 1
