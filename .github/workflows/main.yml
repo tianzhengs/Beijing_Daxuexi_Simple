@@ -17,7 +17,7 @@ jobs:
     steps:
   
     - name: 'Checkout codes'
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     # REQUIRED step
     # Step 2: run the sync action
@@ -43,10 +43,11 @@ jobs:
     - name: Show value of 'has_new_commits'
       run: echo ${{ steps.sync.outputs.has_new_commits }}
 
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v1
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
       with:
-        python-version: 3.7
+        python-version: 3.9
+        cache: 'pip'
         
     - name: Install dependencies
       run: |
