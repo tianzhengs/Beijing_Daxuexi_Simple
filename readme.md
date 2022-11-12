@@ -17,11 +17,11 @@ GitHub IP被封啦，只能本地运行了
 
 安装依赖： 在解压出来的目录里运行`pip install -r requirements.txt`或`pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple` (如果国内环境+没配置代理)
 
-配置账号： main.py 36行 注释掉加一行或修改成 accounts=[('账号1', '密码1'),('账号2', '密码2'),('账号3', '密码3')]
+配置账号： main.py 中 accounts = getAccounts() 一行改成 accounts=[('账号1', '密码1'),('账号2', '密码2'),('账号3', '密码3')]形式
 
 运行： 运行`main.py`
 
-自动运行：搜索“计划任务”相关，脚本更新后会自动配置2天一次的计划任务
+自动运行：可搜索“计划任务”相关，Windows下脚本会自动尝试配置2天一次的计划任务
 
 # 本地运行 -Linux
 
