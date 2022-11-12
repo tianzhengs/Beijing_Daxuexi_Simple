@@ -31,3 +31,33 @@
 
 3. 在Actions界面**手动启用(默认被禁用)** Workflows，**DaXueXi** 自动跟随本分支更新(以希望在有变化时不用再手动fetch upstream)，如有安全顾虑**或需要修改**等可选择没有自动更新的 **DaXueXi (No update)**
 4. (可以手动运行一次试验)，可以在Run python中看到打印的结果信息
+
+# Self-host
+
+最近青年大学习疑似封禁 GitHub IP，可以通过以下方法转移到自托管的 linux 服务器上运行
+
+```sh
+# 首次运行建立环境
+git clone https://github.com/startkkkkkk/Beijing_Daxuexi_Simple.git
+cd Beijing_Daxuexi_Simple
+pip install -r requirements.txt
+```
+
+然后新建 `run.sh`，写入
+
+```
+#!/usr/bin/bash
+export USERNAME=你的用户名
+export PASSWORD=你的密码
+python main.py
+```
+
+添加执行权限 `chmod +x run.sh`，之后使用 crontab 配置自动运行，执行 `crontab -e`，在打开的编辑器中写入
+
+```
+0 8 */3 * * /home/username/Beijing_Daxuexi_Simple/run.sh
+```
+
+注意修改以上路径到你自己的路径。
+
+然后重启 cron （`sudo service cron restart`） 即可。
