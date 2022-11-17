@@ -2,13 +2,14 @@ import json
 import re
 import time
 import traceback
-
 import requests
 
 from utility import encrypt, cap_recognize
 
+UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.42'
 
-def study(username, password, ua):
+
+def study(username, password):
     # return 1:success;0:fail
     url = ''
     tryTime = 0
@@ -16,7 +17,7 @@ def study(username, password, ua):
         try:
             bjySession = requests.session()
             bjySession.timeout = 5  # set session timeout
-            bjySession.headers.update({"User-Agent": ua, })
+            bjySession.headers.update({"User-Agent": UA, })
             touch = bjySession.get(url="https://m.bjyouth.net/site/login")
             capUrl = "https://m.bjyouth.net" + re.findall(
                 r'src="(/site/captcha.+)" alt=', touch.text)[0]
@@ -81,13 +82,6 @@ def study(username, password, ua):
         print(f'{title} 在运行前已完成,退出')
         return 1
 
-    # pattern = re.compile(r'https://h5.cyol.com/special/daxuexi/(\w+)/m.html\?t=1&z=201')
-    # result = pattern.search(url)
-    # if not result:
-    #     print(f'Url pattern not matched: {url}')
-    #     return 0
-    #
-    # end_img_url = f'https://h5.cyol.com/special/daxuexi/{result.group(1)}/images/end.jpg'
     study_url = f"https://m.bjyouth.net/dxx/check"
     r = bjySession.post(study_url, json={"id": str(courseId), "org_id": int(nOrgID)})  # payload
 
