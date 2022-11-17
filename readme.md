@@ -30,6 +30,10 @@
 
 使用 `python main.py` 命令运行脚本即可。
 
+## 定时运行 （Windows）
+
+
+
 ## 定时运行（Linux）
 
 1. 使用 crontab 配置自动运行，执行 `crontab -e`。
