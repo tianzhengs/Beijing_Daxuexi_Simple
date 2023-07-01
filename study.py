@@ -79,7 +79,7 @@ def study(username, password, ua):
 
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
         print(f'{title} 在运行前已完成,退出')
-        return 1
+        return f'{title} 在运行前已完成,退出\n'
 
     # pattern = re.compile(r'https://h5.cyol.com/special/daxuexi/(\w+)/m.html\?t=1&z=201')
     # result = pattern.search(url)
@@ -102,7 +102,7 @@ def study(username, password, ua):
 
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
         print(f'{title} 成功完成学习')
-        return 1
+        return f'{title} 成功完成学习\n'
     else:
         print(f'完成{title}, 但未在检查中确认')
         return 0
