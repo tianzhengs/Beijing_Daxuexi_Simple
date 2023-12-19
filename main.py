@@ -65,6 +65,7 @@ for username, password in accounts:
     print(f'--User {count}--')
     if study(username, password, ua):
         successful += 1
+    time.sleep(4)
 
 failed = count - successful
 print('--Summary--')
