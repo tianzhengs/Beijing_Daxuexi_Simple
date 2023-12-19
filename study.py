@@ -57,9 +57,11 @@ def study(username, password, ua):
         return 0
 
     orgIdTemp = ''
-    orgPattern = re.compile(r'\(|（\s*(\d+)\s*）|\)')  # 组织id应该是被括号包的
+    orgPattern = re.compile(r'[\(（]\s*(\d+)\s*[）\)]')  # 组织id应该是被括号包的
     learnedInfo = 'https://m.bjyouth.net/dxx/my-study?page=1&limit=15&year=' + time.strftime("%Y", time.localtime())
     haveLearned = bjySession.get(learnedInfo).json()
+
+
 
     orgID = ""
     try:
@@ -76,6 +78,8 @@ def study(username, password, ua):
         print(f"无法获取orgID")
 
     nOrgID = int(bjySession.get('https://m.bjyouth.net/dxx/is-league').text)
+    # if int(orgID) != nOrgID:
+    #     raise Exception('组织id不匹配，如果看到这个请开个issue说下')
 
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
         print(f'{title} 在运行前已完成,退出')
@@ -97,9 +101,8 @@ def study(username, password, ua):
 
     haveLearned = bjySession.get(learnedInfo).json()
 
-    if int(orgID) != nOrgID:
-        raise Exception('组织id不匹配，如果看到这个请开个issue说下')
 
+    time.sleep(5)
     if f"学习课程：《{title}》" in list(map(lambda x: x['text'], haveLearned['data'])):
         print(f'{title} 成功完成学习')
         return 1

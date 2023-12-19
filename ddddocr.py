@@ -559,7 +559,7 @@ class DdddOcr(object):
             image = Image.open(io.BytesIO(img_bytes))
         else:
             image = base64_to_image(img_base64)
-        image = image.resize((int(image.size[0] * (64 / image.size[1])), 64), Image.ANTIALIAS).convert('L')
+        image = image.resize((int(image.size[0] * (64 / image.size[1])), 64), Image.LANCZOS).convert('L')
         image = np.array(image).astype(np.float32)
         image = np.expand_dims(image, axis=0) / 255.
         image = (image - 0.5) / 0.5

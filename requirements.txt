@@ -3,3 +3,4 @@ pycryptodome
 Pillow
 onnxruntime
 numpy
+fake-useragent
