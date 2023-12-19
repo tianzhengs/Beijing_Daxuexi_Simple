@@ -32,7 +32,7 @@ def getAccounts():
     return result
 
 
-ua = UserAgent()
+ua = UserAgent().random
 
 # # Windows Automated Task Management
 # task_name="Daxuexi_18S4F65D"
