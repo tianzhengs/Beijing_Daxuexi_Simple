@@ -1,7 +1,9 @@
 import os
 import time
-
+import sys
 from study import study
+from fake_useragent import UserAgent
+
 
 
 def getAccounts():
@@ -30,18 +32,40 @@ def getAccounts():
     return result
 
 
-ua = os.getenv('UA',
-               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.42')
+ua = UserAgent().random
+
+# # Windows Automated Task Management
+# task_name="Daxuexi_18S4F65D"
+# if os.name == 'nt':
+#     if task_name in os.popen("SCHTASKS /query").read():
+#         print("脚本配置的计划任务已存在")
+#         # + 检测路径
+#     else:
+#         if 1: # change to 0 if you want to manage it yourself
+#             input("没有脚本配置的计划任务，按任意键创建；或者退出并把main.py 43行的1改成0")
+#             k=os.popen(f"{sys.executable} ./runtest.py").read()
+#             if 'SHOULDBEFINE\n'!=k:
+#                 if 'FAILIMPORT\n'==k:
+#                     print("依赖问题")
+#                 else:
+#                     print('创建失败？Python位置不对？')
+#                 exit(1)
+#             create=os.popen(f'''SchTasks /Create /SC DAILY /MO 2 /TN {task_name} /TR "'{sys.executable}' '{os.path.realpath(__file__)}'" /ST 09:00''')
+#             print('创建成功')
 
 accounts = getAccounts()
+# accounts=[('********', '*********')]
 print(f'账号数量：{len(accounts)}')
 successful = 0
 count = 0
 for username, password in accounts:
+    if username=='********':
+        continue
     count += 1
     print(f'--User {count}--')
     if study(username, password, ua):
         successful += 1
+    time.sleep(4)
 
 failed = count - successful
 print('--Summary--')
