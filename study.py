@@ -22,10 +22,10 @@ def match(capImg):
     result = cv2.matchTemplate(capImgSquare, capImgMain, cv2.TM_CCOEFF_NORMED, thres)
     (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(result)
     (startX, startY) = maxLoc
-    cv2.rectangle(BGRImg,(startX,0),(startX,250),(0,255,255),2)  #绘制边界框
-    cv2.imshow("img", BGRImg)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
+    # cv2.rectangle(BGRImg,(startX,0),(startX,250),(0,255,255),2) # 显示识别结果
+    # cv2.imshow("img", BGRImg)
+    # cv2.waitKey()
+    # cv2.destroyAllWindows()
     return startX
 
 
