@@ -8,7 +8,7 @@ import numpy as np
 
 import requests
 
-from utility import encrypt, cap_recognize
+from utility import encrypt
 
 def match(capImg):
     imgData = base64.b64decode(capImg.encode("utf8"))

@@ -1,7 +1,5 @@
 requests
 pycryptodome
-Pillow
-onnxruntime
 numpy
 fake-useragent
 opencv-python
