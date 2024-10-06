@@ -2,10 +2,31 @@ import json
 import re
 import time
 import traceback
+import cv2
+import base64
+import numpy as np
 
 import requests
 
-from utility import encrypt, cap_recognize
+from utility import encrypt
+
+def match(capImg):
+    imgData = base64.b64decode(capImg.encode("utf8"))
+    imgArray = np.fromstring(imgData, np.uint8)
+    BGRImg = cv2.imdecode(imgArray, cv2.COLOR_RGB2BGR)
+    HSVImg = cv2.cvtColor(BGRImg, cv2.COLOR_BGR2HSV)
+    H,S,V=cv2.split(HSVImg)
+    capImgMain = H[0:191,0:340]
+    capImgSquare = H[197:245,5:53]
+    ret1, thres= cv2.threshold(V[0:191,0:340], 200, 255, cv2.THRESH_BINARY_INV)
+    result = cv2.matchTemplate(capImgSquare, capImgMain, cv2.TM_CCOEFF_NORMED, thres)
+    (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(result)
+    (startX, startY) = maxLoc
+    # cv2.rectangle(BGRImg,(startX,0),(startX,250),(0,255,255),2) # 显示识别结果
+    # cv2.imshow("img", BGRImg)
+    # cv2.waitKey()
+    # cv2.destroyAllWindows()
+    return startX
 
 
 def study(username, password, ua):
@@ -18,23 +39,31 @@ def study(username, password, ua):
             bjySession.timeout = 5  # set session timeout
             bjySession.headers.update({"User-Agent": ua, })
             touch = bjySession.get(url="https://m.bjyouth.net/site/login")
-            capUrl = "https://m.bjyouth.net" + re.findall(
-                r'src="(/site/captcha.+)" alt=', touch.text)[0]
+
+            cappp = bjySession.get(url="https://m.bjyouth.net/site/cappp")
+            ret = cappp.json()
+            capImg = ret["img"].replace("data:image/png;base64,","")
+            capKey = ret["key"]
+            value = match(capImg)
+            verifyUrl = f"https://m.bjyouth.net/site/valcappp"
+            data = {"value":value, "key":capKey, "leeway":5}
+            verifyResult = bjySession.post(url=verifyUrl, data=data)
+            if verifyResult.text == 'false':
+                print('Login:识别的验证码错误')
+                continue
+
             if "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD5uIDebA2qU746e/NVPiQSBA0Q" not in touch.text:
                 print("记录的公钥没有出现")
-            capText = cap_recognize(bjySession.get(url=capUrl).content)
+            # capText = cap_recognize(bjySession.get(url=capUrl).content)
             # print(f'验证码识别: {capText}')
             login_r = bjySession.post('https://m.bjyouth.net/site/login',
                                       data={
                                           '_csrf_mobile': bjySession.cookies.get_dict()['_csrf_mobile'],
                                           'Login[password]': encrypt(password),
                                           'Login[username]': encrypt(username),
-                                          'Login[verifyCode]': capText
+                                          'Login[verifyCode]': capKey
                                       })
 
-            if login_r.text == '8':
-                print('Login:识别的验证码错误')
-                continue
             if 'fail' in login_r.text:
                 tryTime += 9
                 raise Exception('Login:账号密码错误')
